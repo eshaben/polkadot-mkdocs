@@ -20,7 +20,7 @@ jobs:
       - name: Pull docs repository
         uses: actions/checkout@v4
         with:
-          repository: polkadot-developers/polkadot-docs
+          repository: eshaben/polkadot-docs
           path: polkadot-docs
       - uses: actions/setup-python@v5
         with:
