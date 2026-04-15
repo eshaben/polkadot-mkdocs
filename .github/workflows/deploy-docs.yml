@@ -21,7 +21,7 @@ jobs:
       - name: Pull docs repository
         uses: actions/checkout@v4
         with:
-          repository: polkadot-developers/polkadot-docs
+          repository: eshaben/polkadot-docs
           path: polkadot-docs
           ref: ${{ inputs.branch }}
       - uses: actions/setup-python@v5
