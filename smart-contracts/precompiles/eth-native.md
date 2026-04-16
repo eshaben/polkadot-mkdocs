@@ -1,0 +1,47 @@
+---
+title: Ethereum-Native Precompiles
+description: General overview of Ethereum-native precompiles in Polkadot Hub’s Revive pallet, including usage basics and details on standard precompiles for smart contracts.
+categories:
+- Smart Contracts
+url: https://docs.polkadot.com/smart-contracts/precompiles/eth-native/
+word_count: 526
+token_estimate: 1161
+version_hash: sha256:0272a145c66e5b60feae47bf0c0bd1d24333f1e23fbcd81aa4927cf8a31a074c
+last_updated: '2026-04-15T03:51:44+00:00'
+---
+
+# Ethereum-Native Precompiles
+
+## Introduction
+
+Ethereum-native precompiles are special contract implementations that provide essential cryptographic and utility functions at the runtime level. These precompiles are available at predefined addresses and offer optimized, native implementations of commonly used operations that would be computationally expensive or impractical to implement in pure contract code.
+
+In Polkadot Hub's Revive pallet, these precompiles maintain compatibility with standard Ethereum addresses, allowing developers familiar with Ethereum to seamlessly transition their smart contracts while benefiting from the performance optimizations of the PVM runtime.
+
+## How to Use Precompiles
+
+To use a precompile in your smart contract, simply call the precompile's address as you would any other contract. Each precompile has a specific address (shown in the table below) and expects input data in a particular format. The precompile executes natively at the runtime level and returns the result directly to your contract.
+
+For example, to use the ECRecover precompile to verify a signature, you would call address `0x0000000000000000000000000000000000000001` with the properly formatted signature data. The precompile handles the complex cryptographic operations efficiently and returns the recovered public key.
+
+You can find sample contracts for each precompile in the [`precompiles-hardhat`](https://github.com/polkadot-developers/polkavm-hardhat-examples/tree/master/precompiles-hardhat/contracts) project.
+
+## Standard Precompiles in Polkadot Hub
+
+Revive implements the standard set of Ethereum precompiles:
+
+|                                                                                   Contract Name                                                                                   | Address (Last Byte) |                                           Description                                           |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------: | :---------------------------------------------------------------------------------------------: |
+|  [ECRecover](https://github.com/paritytech/polkadot-sdk/tree/polkadot-stable2512-3/substrate/frame/revive/src/precompiles/builtin/ecrecover.rs)   |        0x01         |                       Recovers the public key associated with a signature                       |
+|     [Sha256](https://github.com/paritytech/polkadot-sdk/tree/polkadot-stable2512-3/substrate/frame/revive/src/precompiles/builtin/sha256.rs)      |        0x02         |                              Implements the SHA-256 hash function                               |
+|  [Ripemd160](https://github.com/paritytech/polkadot-sdk/tree/polkadot-stable2512-3/substrate/frame/revive/src/precompiles/builtin/ripemd160.rs)   |        0x03         |                             Implements the RIPEMD-160 hash function                             |
+|   [Identity](https://github.com/paritytech/polkadot-sdk/tree/polkadot-stable2512-3/substrate/frame/revive/src/precompiles/builtin/identity.rs)    |        0x04         |                          Data copy function (returns input as output)                           |
+|     [Modexp](https://github.com/paritytech/polkadot-sdk/tree/polkadot-stable2512-3/substrate/frame/revive/src/precompiles/builtin/modexp.rs)      |        0x05         |                                     Modular exponentiation                                      |
+|   [Bn128Add](https://github.com/paritytech/polkadot-sdk/blob/polkadot-stable2512-3/substrate/frame/revive/src/precompiles/builtin/bn128.rs#L31)   |        0x06         |    Addition on the [alt_bn128 curve](https://eips.ethereum.org/EIPS/eip-196)    |
+|   [Bn128Mul](https://github.com/paritytech/polkadot-sdk/blob/polkadot-stable2512-3/substrate/frame/revive/src/precompiles/builtin/bn128.rs#L59)   |        0x07         | Multiplication on the [alt_bn128 curve](https://eips.ethereum.org/EIPS/eip-196) |
+| [Bn128Pairing](https://github.com/paritytech/polkadot-sdk/blob/polkadot-stable2512-3/substrate/frame/revive/src/precompiles/builtin/bn128.rs#L87) |        0x08         |                              Pairing check on the alt_bn128 curve                               |
+|    [Blake2F](https://github.com/paritytech/polkadot-sdk/tree/polkadot-stable2512-3/substrate/frame/revive/src/precompiles/builtin/blake2f.rs)     |        0x09         |                                  Blake2 compression function F                                  |
+
+## Conclusion
+
+Ethereum-native precompiles provide a powerful foundation for smart contract development on Polkadot Hub, offering high-performance implementations of essential cryptographic and utility functions. By maintaining compatibility with standard Ethereum precompile addresses and interfaces, Revive ensures that developers can leverage existing knowledge and tools while benefiting from the enhanced performance of native execution.
